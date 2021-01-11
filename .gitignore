@@ -3,3 +3,4 @@ auth/backend/authapp/authapp/secret_settings.py
 *.pyc
 auth/backend/authapp/db.sqlite3
 auth/frontend/.eslintcache
+auth/backend/authapp/build
