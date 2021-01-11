@@ -3,9 +3,46 @@ import{
     LOGIN_SUCCESS, 
     LOGIN_FAIL, 
     LOAD_USER_SUCCESS, 
-    LOAD_USER_FAIL 
+    LOAD_USER_FAIL,
+    AUTHENTICATION_SUCCESS,
+    AUTHENTICATION_FAIL,
+    LOGOUT
 } from './types';
 
+export const checkAuthenticated = () => async dispatch => {
+    if (localStorage.getItem('access')){
+        const config = {
+            headers : {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            }
+        };
+
+        const body = JSON.stringify({ token: localStorage.getItem('access') });
+
+        try{
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/verify/`, body, config)
+
+            if (res.data.code !== 'token_not_valid'){
+                dispatch({
+                    type: AUTHENTICATION_SUCCESS
+                })
+            }else{
+                dispatch({
+                    type: AUTHENTICATION_FAIL
+                })
+            }
+        }catch(err){
+            dispatch({
+                type: AUTHENTICATION_FAIL
+            })
+        }
+    }else{
+        dispatch({
+            type: AUTHENTICATION_FAIL
+        })
+    }
+};
 
 export const load_user = () => async dispatch => {
     if (localStorage.getItem('access')){
@@ -62,3 +99,10 @@ export const login = ( email, password ) => async dispatch => {
         });
     }
 };
+
+
+export const logout = () => dispatch => {
+    dispatch({
+        type: LOGOUT
+    })
+}

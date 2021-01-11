@@ -2,7 +2,10 @@ import{
     LOGIN_SUCCESS, 
     LOGIN_FAIL, 
     LOAD_USER_SUCCESS, 
-    LOAD_USER_FAIL 
+    LOAD_USER_FAIL,
+    AUTHENTICATION_SUCCESS,
+    AUTHENTICATION_FAIL,
+    LOGOUT
 } from '../actions/types';
 
 
@@ -37,6 +40,26 @@ export default function reducer(state = initialState, action){
                 user: null
             }
         case LOGIN_FAIL:
+            localStorage.removeItem('access')
+            localStorage.removeItem('refresh')
+            return{
+                ...state,
+                access: null,
+                refresh: null,
+                isAuthenticated: false,
+                user: null
+            }
+        case AUTHENTICATION_SUCCESS:
+            return{
+                ...state,
+                isAuthenticated: true
+            }
+        case AUTHENTICATION_FAIL:
+            return{
+                ...state,
+                isAuthenticated: false
+            }
+        case LOGOUT:
             localStorage.removeItem('access')
             localStorage.removeItem('refresh')
             return{
