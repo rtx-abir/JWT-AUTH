@@ -39,7 +39,7 @@ const Login = ({ login, isAuthenticated }) => {
                         required
                     />
                 </div>
-                <div>
+                <div className = 'form-group'>
                     <input 
                         className = 'form-control'
                         type = 'password'
@@ -50,7 +50,6 @@ const Login = ({ login, isAuthenticated }) => {
                         required
                     />
                 </div>
-                <br></br>
                 <button className = 'btn btn-primary' type = 'submit'>Login</button>
             </form>
             <p className = 'mt-3'>
@@ -68,4 +67,4 @@ const mapStateToProps = state =>({
     isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps, { login })(Login)
+export default connect(mapStateToProps, { login })(Login);
