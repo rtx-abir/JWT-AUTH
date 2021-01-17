@@ -9,7 +9,11 @@ import{
     PASSWORD_RESET_SUCCESS,
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
-    PASSWORD_RESET_CONFIRM_FAIL
+    PASSWORD_RESET_CONFIRM_FAIL,
+    ACTIVATION_SUCCESS,
+    ACTIVATION_FAIL,
+    SIGNUP_SUCCESS,
+    SIGNUP_FAIL
 } from '../actions/types';
 
 
@@ -44,6 +48,8 @@ export default function reducer(state = initialState, action){
                 user: null
             }
         case LOGIN_FAIL:
+        case SIGNUP_FAIL:
+        case LOGOUT:
             localStorage.removeItem('access')
             localStorage.removeItem('refresh')
             return{
@@ -63,20 +69,17 @@ export default function reducer(state = initialState, action){
                 ...state,
                 isAuthenticated: false
             }
-        case LOGOUT:
-            localStorage.removeItem('access')
-            localStorage.removeItem('refresh')
+        case SIGNUP_SUCCESS:
             return{
                 ...state,
-                access: null,
-                refresh: null,
-                isAuthenticated: false,
-                user: null
+                isAuthenticated: false
             }
         case PASSWORD_RESET_SUCCESS:
         case PASSWORD_RESET_FAIL:
         case PASSWORD_RESET_CONFIRM_SUCCESS:
         case PASSWORD_RESET_CONFIRM_FAIL:
+        case ACTIVATION_SUCCESS:
+        case ACTIVATION_FAIL:
             return{
                 ...state
             }
